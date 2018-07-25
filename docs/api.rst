@@ -16,3 +16,7 @@ This part of the documentation covers all the interfaces of the Docx Utils Libra
 .. automodule:: docx_utils.cli
    :members:
    :undoc-members:
+
+.. automodule:: docx_utils.flatten
+   :members:
+   :undoc-members:
