@@ -3,9 +3,9 @@
 from __future__ import absolute_import
 
 import py
+from tests import PROJECT_DIR
 
 from docx_utils.flatten import opc_to_flat_opc
-from tests import PROJECT_DIR
 
 
 def test_opc_to_flat_opc(tmpdir):

@@ -3,7 +3,8 @@ u"""
 Docx to flat XML converter
 ==========================
 
-This converter is inspired from Eric White’s article: `Transforming Open XML Documents to Flat OPC Format <https://blogs.msdn.microsoft.com/ericwhite/2008/09/29/transforming-open-xml-documents-to-flat-opc-format/>`_.
+This converter is inspired from Eric White’s article: `Transforming Open XML Documents to Flat OPC Format
+<https://blogs.msdn.microsoft.com/ericwhite/2008/09/29/transforming-open-xml-documents-to-flat-opc-format/>`_.
 
     This post describes the process of conversion of an Open XML (OPC) document
     into a Flat OPC document, and presents the C# function, OpcToFlat.

@@ -64,7 +64,7 @@ To set up `docx_utils` for local development:
     git add .
     git commit -m "Your detailed description of your changes."
     git push origin feature/name-of-your-feature  # or
-    git push origin fix/name-of-your-bugfix  # or
+    git push origin fix/name-of-your-bugfix
 
 6. Submit a pull request through the GitHub website.
 
