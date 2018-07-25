@@ -75,9 +75,48 @@ This library allow you to:
 Installation
 ============
 
-::
+.. code:: bash
 
     pip install docx-utils
+
+
+Using the library
+=================
+
+Using the library to convert an Open XML document into flat OPC format:
+
+.. code:: python
+
+   >>> from docx_utils.flatten import opc_to_flat_opc
+   >>> opc_to_flat_opc("sample.docx", "sample.xml")
+
+
+Command Line Interface (CLI)
+============================
+
+Printing the online help:
+
+.. code:: bash
+
+   $ docx_utils --help
+   Usage: docx_utils [OPTIONS] COMMAND [ARGS]...
+
+     Docx utilities
+
+   Options:
+     --version  Show the version and exit.
+     --help     Show this message and exit.
+
+   Commands:
+     flatten  Convert an Open XML document into flat OPC format.
+
+Converting an Open XML document into flat OPC format:
+
+.. code:: bash
+
+   $ docx_utils flatten sample.docx sample.xml
+   Converting 'sample.docx' to flat XML...
+   Conversion done: 'sample.xml'.
 
 
 Documentation
