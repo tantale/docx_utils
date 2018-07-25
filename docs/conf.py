@@ -27,7 +27,7 @@ project = 'Docx Utils'
 year = '2018'
 author = 'Laurent LAPORTE'
 copyright = '{0}, {1}'.format(year, author)
-release = '0.1.0'  # keep single quotes for bumpversion RegEx
+release = '0.1.1'  # keep single quotes for bumpversion RegEx
 version = '.'.join(release.split('.')[:2])  # 'major.minor'
 
 pygments_style = 'trac'
