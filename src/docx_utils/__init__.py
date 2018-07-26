@@ -10,5 +10,5 @@ This library allow you to:
 
 __app_name__ = "docx_utils"
 __app_author__ = "Laurent LAPORTE"
-__version__ = '0.1.1'  # keep single quotes for bumpversion RegEx
+__version__ = '0.1.2'  # keep single quotes for bumpversion RegEx
 __release__ = '.'.join(__version__.split('.')[:2])  # 'major.minor'

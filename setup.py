@@ -39,7 +39,7 @@ def read(filename):
 setup(
     # --- identity
     name='docx-utils',
-    version='0.1.1',  # keep single quotes for bumpversion RegEx
+    version='0.1.2',  # keep single quotes for bumpversion RegEx
 
     # --- description
     description='Creation and manipulation of Open XML documents (mainly docx).',
