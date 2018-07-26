@@ -32,7 +32,7 @@ def read(filename):
     with io.open(filename, mode="r", encoding='utf-8') as fd:
         text = fd.read()
         text = re.sub(text_type(r':[a-z]+:`~?(.*?)`'), text_type(r'``\1``'), text, flags=re.M | re.S)
-        text = re.sub(text_type('^.. start-badges.*^.. end-badges'), text_type(''), text, flags=re.M | re.S)
+        text = re.sub(text_type('^.. start-exclude.*?^.. end-exclude'), text_type(''), text, flags=re.M | re.S)
         return text
 
 

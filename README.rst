@@ -2,7 +2,7 @@
 Overview
 ========
 
-.. start-badges
+.. start-exclude
 
 .. list-table::
     :stub-columns: 1
@@ -57,7 +57,7 @@ Overview
     :target: https://pypi.python.org/pypi/docx-utils
 
 
-.. end-badges
+.. end-exclude
 
 Creation and manipulation of Open XML documents (mainly docx).
 
@@ -132,6 +132,8 @@ To run the all tests run::
 
     tox
 
+.. start-exclude
+
 Note, to combine the coverage data from all the tox environments run:
 
 .. list-table::
@@ -149,3 +151,4 @@ Note, to combine the coverage data from all the tox environments run:
 
             PYTEST_ADDOPTS=--cov-append tox
 
+.. end-exclude

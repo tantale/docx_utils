@@ -2,12 +2,14 @@
 Changelog
 =========
 
+.. start-exclude
 
 All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/en/1.0.0/>`_
 and this project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`_.
 
+.. end-exclude
 
 v0.1.2 (2018-07-26)
 ===================
@@ -19,6 +21,12 @@ Fixed
 
 * Drop support for Python 3.7: this Python version is not yet available on all platform.
   However, it is known to work on Ubuntu with the python-3.7-dev release.
+
+Other
+~~~~~
+
+* Use the pseudo-tags ``start-exclude``/``end-exclude`` in ``CHANGELOG.rst`` and ``README.rst``
+  to exclude text from the generated ``PKG-INFO`` during setup.
 
 
 v0.1.1 (2018-07-25)
