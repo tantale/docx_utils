@@ -19,6 +19,11 @@ Fixed
 
 * Correct the project's dependencies: Enum34 is only required for Python versions < 3.4.
 
+Other
+~~~~~
+
+* Continuous Integration: add configurations for Python 3.7 and Python 3.8.
+
 
 v0.1.2 (2018-07-26)
 ===================
