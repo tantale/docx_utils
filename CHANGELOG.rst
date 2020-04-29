@@ -17,6 +17,8 @@ v0.1.3 (unreleased)
 Fixed
 ~~~~~
 
+* Correct the project's dependencies: Enum34 is only required for Python versions < 3.4.
+
 
 v0.1.2 (2018-07-26)
 ===================
