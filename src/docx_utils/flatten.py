@@ -27,7 +27,8 @@ class ContentTypes(object):
     """
     ContentTypes contained in a "[Content_Types].xml" file.
     """
-    NS = {'ct': u"http://schemas.openxmlformats.org/package/2006/content-types"}
+
+    NS = {"ct": u"http://schemas.openxmlformats.org/package/2006/content-types"}
 
     def __init__(self):
         self._defaults = {}
@@ -35,10 +36,14 @@ class ContentTypes(object):
 
     def parse_xml_data(self, data):
         tree = etree.fromstring(data)  # type: etree._Element
-        self._defaults = {n.attrib[u'Extension']: n.attrib[u'ContentType']
-                          for n in tree.xpath(u'//ct:Default', namespaces=self.NS)}
-        self._overrides = {n.attrib[u'PartName']: n.attrib[u'ContentType']
-                           for n in tree.xpath(u'//ct:Override', namespaces=self.NS)}
+        self._defaults = {
+            n.attrib[u"Extension"]: n.attrib[u"ContentType"]
+            for n in tree.xpath(u"//ct:Default", namespaces=self.NS)
+        }
+        self._overrides = {
+            n.attrib[u"PartName"]: n.attrib[u"ContentType"]
+            for n in tree.xpath(u"//ct:Override", namespaces=self.NS)
+        }
 
     def resolve(self, part_name):
         basename = os.path.basename(part_name)
@@ -47,7 +52,7 @@ class ContentTypes(object):
         return content_type
 
 
-PackagePart = collections.namedtuple('PackagePart', ['uri', 'content_type', 'data'])
+PackagePart = collections.namedtuple("PackagePart", ["uri", "content_type", "data"])
 
 
 def iter_package(opc_path):
@@ -79,17 +84,20 @@ def opc_to_flat_opc(src_path, dst_path):
     pkg = u"http://schemas.microsoft.com/office/2006/xmlPackage"
 
     ext = os.path.splitext(src_path)[1].lower()
-    progid = {'.docx': u"Word.Document",
-              '.xlsx': u"Excel.Sheet",
-              '.pptx': u"PowerPoint.Show"}[ext]
+    progid = {
+        ".docx": u"Word.Document",
+        ".xlsx": u"Excel.Sheet",
+        ".pptx": u"PowerPoint.Show",
+    }[ext]
 
-    content = (u'<?mso-application progid="{progid}"?>'
-               u'<pkg:package xmlns:pkg="{pkg}"/>').format(progid=progid, pkg=pkg)
+    content = (
+        u'<?mso-application progid="{progid}"?>' u'<pkg:package xmlns:pkg="{pkg}"/>'
+    ).format(progid=progid, pkg=pkg)
 
     document = etree.parse(io.StringIO(content))  # type: etree._ElementTree
     root = document.getroot()
 
-    ns = {'pkg': pkg}
+    ns = {"pkg": pkg}
 
     for part in iter_package(src_path):
         node = etree.SubElement(root, u"{{{pkg}}}part".format(pkg=pkg), nsmap=ns)
@@ -100,18 +108,22 @@ def opc_to_flat_opc(src_path, dst_path):
             data.append(etree.fromstring(part.data))
         else:
             node.attrib[u"{{{pkg}}}compression".format(pkg=pkg)] = "store"
-            data = etree.SubElement(node, u"{{{pkg}}}binaryData".format(pkg=pkg), nsmap=ns)
+            data = etree.SubElement(
+                node, u"{{{pkg}}}binaryData".format(pkg=pkg), nsmap=ns
+            )
             encoded = base64.b64encode(part.data).decode()  # bytes -> str
             iterable = iter(encoded)
             chunks = list(iter(lambda: list(itertools.islice(iterable, 76)), []))
             chunks = u"\n".join(u"".join(chunk) for chunk in chunks)
             data.text = chunks
 
-    content = etree.tostring(document,
-                             xml_declaration=True,
-                             encoding='UTF-8',
-                             pretty_print=False,
-                             with_tail=False,
-                             standalone=True)
+    content = etree.tostring(
+        document,
+        xml_declaration=True,
+        encoding="UTF-8",
+        pretty_print=False,
+        with_tail=False,
+        standalone=True,
+    )
     with io.open(dst_path, mode="wb") as f:
         f.write(content)
