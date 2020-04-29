@@ -11,6 +11,13 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 
 .. end-exclude
 
+v0.1.3 (unreleased)
+===================
+
+Fixed
+~~~~~
+
+
 v0.1.2 (2018-07-26)
 ===================
 

@@ -40,9 +40,9 @@ Overview
     :alt: PyPI Package latest release
     :target: https://pypi.org/project/docx-utils/
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/tantale/docx_utils/v0.1.2.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/tantale/docx_utils/v0.1.3.svg
     :alt: Commits since latest release
-    :target: https://github.com/tantale/docx_utils/compare/v0.1.2...master
+    :target: https://github.com/tantale/docx_utils/compare/v0.1.3...master
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/docx-utils.svg
     :alt: PyPI Wheel
