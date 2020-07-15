@@ -3,6 +3,9 @@ graft docs
 graft src
 graft tests
 
+include target/.gitignore
+recursive-exclude target pytest
+
 include .bumpversion.cfg
 include .coveragerc
 include .cookiecutterrc
