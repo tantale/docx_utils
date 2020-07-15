@@ -51,7 +51,7 @@ def read(filename):
 setup(
     # --- identity
     name="docx-utils",
-    version="0.1.3",
+    version="0.1.4",
     # --- description
     description="Creation and manipulation of Open XML documents (mainly docx).",
     long_description=u"{0}\n{1}".format(read("README.rst"), read("CHANGELOG.rst")),
