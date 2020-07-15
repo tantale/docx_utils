@@ -15,15 +15,17 @@ install_requires = [
     'enum34 ; python_version < "3.4"',
 ]
 
-tests_require = [
-    # Third party dependencies
-    "PyTest",
-    "PyTest-Cov",
-    "Tox",
-    "isort",
+with io.open("tests/requirements.txt") as fd:
+    tests_require = [line.strip() for line in fd if line.strip() and not line.startswith("#")]
+
+dev_require = [
+    "tox < 4",
+    "zipp < 2 ; python_version < '3'",
+    "configparser < 5 ; python_version < '3'",
+    "virtualenv < 20 ; python_version < '3' and sys_platform == 'win32'",
 ]
 
-extras_require = {"test": tests_require}
+extras_require = {"test": tests_require, "dev": dev_require}
 
 
 def read(filename):
@@ -53,6 +55,7 @@ setup(
     # --- description
     description="Creation and manipulation of Open XML documents (mainly docx).",
     long_description=u"{0}\n{1}".format(read("README.rst"), read("CHANGELOG.rst")),
+    long_description_content_type="text/x-rst",
     author="Laurent LAPORTE",
     author_email="tantale.solutions@gmail.com",
     url="https://github.com/tantale/docx_utils",
@@ -73,6 +76,9 @@ setup(
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Utilities",
     ],
@@ -84,5 +90,6 @@ setup(
     exclude_package_data={"docx_utils": []},
     zip_safe=False,
     extras_require=extras_require,
-    entry_points={"console_scripts": ["docx_utils = docx_utils.cli:main",]},
+    entry_points={"console_scripts": ["docx_utils = docx_utils.cli:main"]},
+    python_requires=">= 2.7, != 3.0.*, != 3.1.*, != 3.2.*, != 3.3.*, != 3.4.*, < 4",
 )
