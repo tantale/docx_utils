@@ -5,10 +5,9 @@ from __future__ import absolute_import
 import shutil
 
 import pytest
-
-from docx_utils.exceptions import UnknownContentTypeError
 from tests import PROJECT_DIR
 
+from docx_utils.exceptions import UnknownContentTypeError
 from docx_utils.flatten import opc_to_flat_opc
 
 
