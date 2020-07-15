@@ -1,5 +1,7 @@
 # coding: utf-8
-import py
+import shutil
+
+import pytest
 from click.testing import CliRunner
 from tests import PROJECT_DIR
 
@@ -9,20 +11,41 @@ from docx_utils.cli import main
 
 def test_main__version():
     runner = CliRunner()
-    result = runner.invoke(main, ['--version'])
+    result = runner.invoke(main, ["--version"])
     assert result.exit_code == 0
-    assert result.output.strip() == 'main, version {0}'.format(docx_utils.__version__)
+    assert result.output.strip() == "main, version {0}".format(docx_utils.__version__)
 
 
-def test_main_flatten(tmpdir):
-    # type: (py.path.LocalPath) -> None
-    relpath = 'tests/resources/test_opc_to_flat_opc/Sample document with table.docx'
-    res_path = py.path.local(PROJECT_DIR).join(relpath)  # type: py.path.LocalPath
-    src_path = tmpdir.join(res_path.basename)  # type: py.path.LocalPath
-    res_path.copy(src_path)
-    dst_path = py.path.local(src_path.dirname).join(src_path.purebasename + ".xml")
+@pytest.mark.parametrize(
+    "relpath",
+    [
+        "tests/resources/test_opc_to_flat_opc/Sample document with table.docx",
+        "tests/resources/test_opc_to_flat_opc/cycle_calculs_cherchons_fail.docx",
+    ],
+)
+def test_main__flatten(relpath, tmp_path):
+    res_path = PROJECT_DIR.joinpath(relpath)
+    src_path = tmp_path.joinpath(res_path.name)
+    shutil.copy2(str(res_path), str(src_path))
+    dst_path = src_path.with_suffix(".xml")
     runner = CliRunner()
-    result = runner.invoke(main, ['flatten', str(src_path), str(dst_path)])
+    result = runner.invoke(main, ["flatten", str(src_path), str(dst_path)])
     assert result.exit_code == 0
     assert str(src_path) in result.output
     assert str(dst_path) in result.output
+
+
+@pytest.mark.parametrize(
+    "relpath",
+    ["tests/resources/test_opc_to_flat_opc/cycle_calculs_cherchons_fail.docx",],
+)
+def test_main__flatten_fail(relpath, tmp_path):
+    res_path = PROJECT_DIR.joinpath(relpath)
+    src_path = tmp_path.joinpath(res_path.name)
+    shutil.copy2(str(res_path), str(src_path))
+    dst_path = src_path.with_suffix(".xml")
+    runner = CliRunner()
+    result = runner.invoke(
+        main, ["flatten", str(src_path), str(dst_path), "--on-error", "strict"]
+    )
+    assert result.exit_code == 1

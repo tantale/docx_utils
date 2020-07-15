@@ -1,5 +1,8 @@
 # coding: utf-8
 
-import os
+try:
+    import pathlib
+except ImportError:
+    import pathlib2 as pathlib
 
-PROJECT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+PROJECT_DIR = pathlib.Path(__file__).absolute().parent.parent

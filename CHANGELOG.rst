@@ -22,9 +22,12 @@ Fixed
 * Add the :mod:`~docx_utils.exceptions` module: Exception hierarchy for the docx-utils package.
 
 * Fix `#1 <https://github.com/tantale/docx_utils/issues/1>`_:
-  Add the *on_error* option in the :func:`~docx_utils.flatten.opc_to_flat_opc` function
-  in order to ignore (or raise an exception) when a part URI cannot be resolved
-  during the Microsoft Office document parsing.
+
+  - Add the *on_error* option in the :func:`~docx_utils.flatten.opc_to_flat_opc` function
+    in order to ignore (or raise an exception) when a part URI cannot be resolved
+    during the Microsoft Office document parsing.
+
+  - Change the command line interface: add the ``--on-error`` option to handle parsing error.
 
 Other
 ~~~~~
