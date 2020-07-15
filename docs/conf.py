@@ -27,7 +27,7 @@ project = "Docx Utils"
 year = "2018"
 author = "Laurent LAPORTE"
 copyright = "{0}, {1}".format(year, author)
-release = "0.1.3"
+release = "0.2.0"
 version = ".".join(release.split(".")[:2])  # 'major.minor'
 
 pygments_style = "trac"
