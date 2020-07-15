@@ -16,11 +16,14 @@ import base64
 import collections
 import io
 import itertools
+import mimetypes
 import os
 import zipfile
 
 import six.moves.urllib.request
 from lxml import etree
+
+from docx_utils.exceptions import UnknownContentTypeError
 
 
 class ContentTypes(object):
@@ -49,18 +52,27 @@ class ContentTypes(object):
         basename = os.path.basename(part_name)
         ext = basename.rsplit(".", 1)[1]
         content_type = self._overrides.get(part_name) or self._defaults.get(ext)
-        return content_type
+        return content_type or mimetypes.guess_type(part_name, strict=True)[0]
 
 
 PackagePart = collections.namedtuple("PackagePart", ["uri", "content_type", "data"])
 
 
-def iter_package(opc_path):
+def iter_package(opc_path, on_error="ignore"):
     """
     Iterate a Open XML document and yield the package parts.
 
     :param str opc_path: Microsoft Office document to read (.docx, .xlsx, .pptx)
+
+    :param str on_error:
+        control the way errors are handled when a part URI cannot be resolved:
+
+        - 'ignore": ignore the part,
+        - 'strict': raise an exception.
+
     :return: Iterator which yield package parts
+
+    :raise UnknownContentTypeError: if a part URI cannot be resolved.
     """
     content_types = ContentTypes()
     with zipfile.ZipFile(opc_path, mode="r") as f:
@@ -68,18 +80,34 @@ def iter_package(opc_path):
             if name == "[Content_Types].xml":
                 content_types.parse_xml_data(f.read(name))
             else:
-                uri = six.text_type("/" + six.moves.urllib.request.pathname2url(name))
+                uri = six.moves.urllib.request.pathname2url(name)
+                uri = uri.decode("utf-8") if isinstance(uri, six.binary_type) else uri
                 content_type = content_types.resolve(uri)
-                data = f.read(name)
-                yield PackagePart(uri, content_type, data)
+                if content_type is None:
+                    if on_error == "strict":
+                        raise UnknownContentTypeError(opc_path, uri)
+                    elif on_error == "ignore":
+                        pass
+                    else:
+                        raise ValueError(on_error)
+                else:
+                    data = f.read(name)
+                    yield PackagePart(uri, content_type, data)
 
 
-def opc_to_flat_opc(src_path, dst_path):
+def opc_to_flat_opc(src_path, dst_path, on_error="ignore"):
     """
     Convert an Open XML document into a flat OPC format.
 
     :param str src_path: Microsoft Office document to convert (.docx, .xlsx, .pptx)
+
     :param str dst_path: Microsoft Office document converted into flat OPC format (.xml)
+
+    :param str on_error:
+        control the way errors are handled when a part URI cannot be resolved:
+
+        - 'ignore": ignore the part,
+        - 'strict': raise an exception.
     """
     pkg = u"http://schemas.microsoft.com/office/2006/xmlPackage"
 
@@ -99,7 +127,7 @@ def opc_to_flat_opc(src_path, dst_path):
 
     ns = {"pkg": pkg}
 
-    for part in iter_package(src_path):
+    for part in iter_package(src_path, on_error=on_error):
         node = etree.SubElement(root, u"{{{pkg}}}part".format(pkg=pkg), nsmap=ns)
         node.attrib[u"{{{pkg}}}name".format(pkg=pkg)] = part.uri
         node.attrib[u"{{{pkg}}}contentType".format(pkg=pkg)] = part.content_type
