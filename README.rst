@@ -122,7 +122,7 @@ Converting an Open XML document into flat OPC format:
 Documentation
 =============
 
-https://docx_utils.readthedocs.io/
+https://docx-utils.readthedocs.io/en/latest/
 
 
 Development
