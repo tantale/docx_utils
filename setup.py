@@ -13,6 +13,7 @@ install_requires = [
     "six",
     "lxml",
     'enum34 ; python_version < "3.4"',
+    'backports.tempfile ; python_version < "3.4"',
 ]
 
 with io.open("tests/requirements.txt") as fd:

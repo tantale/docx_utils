@@ -16,44 +16,14 @@ import base64
 import collections
 import io
 import itertools
-import mimetypes
 import os
 import zipfile
 
 import six.moves.urllib.request
 from lxml import etree
 
+from docx_utils.content_types import ContentTypes
 from docx_utils.exceptions import UnknownContentTypeError
-
-
-class ContentTypes(object):
-    """
-    ContentTypes contained in a "[Content_Types].xml" file.
-    """
-
-    NS = {"ct": u"http://schemas.openxmlformats.org/package/2006/content-types"}
-
-    def __init__(self):
-        self._defaults = {}
-        self._overrides = {}
-
-    def parse_xml_data(self, data):
-        tree = etree.fromstring(data)  # type: etree._Element
-        self._defaults = {
-            n.attrib[u"Extension"]: n.attrib[u"ContentType"]
-            for n in tree.xpath(u"//ct:Default", namespaces=self.NS)
-        }
-        self._overrides = {
-            n.attrib[u"PartName"]: n.attrib[u"ContentType"]
-            for n in tree.xpath(u"//ct:Override", namespaces=self.NS)
-        }
-
-    def resolve(self, part_name):
-        basename = os.path.basename(part_name)
-        ext = basename.rsplit(".", 1)[1]
-        content_type = self._overrides.get(part_name) or self._defaults.get(ext)
-        return content_type or mimetypes.guess_type(part_name, strict=True)[0]
-
 
 PackagePart = collections.namedtuple("PackagePart", ["uri", "content_type", "data"])
 

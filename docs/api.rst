@@ -17,10 +17,18 @@ This part of the documentation covers all the interfaces of the Docx Utils Libra
    :members:
    :undoc-members:
 
+.. automodule:: docx_utils.content_types
+   :members:
+   :undoc-members:
+
 .. automodule:: docx_utils.cli
    :members:
    :undoc-members:
 
 .. automodule:: docx_utils.flatten
+   :members:
+   :undoc-members:
+
+.. automodule:: docx_utils.emboss
    :members:
    :undoc-members:
