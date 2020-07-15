@@ -65,4 +65,3 @@ docs/_build
 *.bak
 
 junit-*.xml
-target/
